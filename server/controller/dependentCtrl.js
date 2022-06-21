@@ -1,6 +1,10 @@
 const findAll = async (req, res) => {
     try {
-        const dependent = await req.context.models.dependents.findAll()
+        const dependent = await req.context.models.dependents.findAll({
+            include: [{
+                all: true
+            }]
+        })
         return res.send(dependent)
     } catch (error) {
         return res.status(404).send(error)

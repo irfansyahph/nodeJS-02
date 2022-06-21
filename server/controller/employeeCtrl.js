@@ -1,6 +1,10 @@
 const findAll = async (req, res) => {
     try {
-        const employee = await req.context.models.employees.findAll()
+        const employee = await req.context.models.employees.findAll({
+            include: [{
+                all: true
+            }]
+        })
         return res.send(employee)
     } catch (error) {
         return res.status(404).send(error)
@@ -19,6 +23,7 @@ const findOne = async (req, res) => {
 }
 
 const create = async (req, res) => {
+    const cekDept = req.departments
     try {
         const employee = await req.context.models.employees.create({
             employee_id: req.body.employee_id,
@@ -30,7 +35,7 @@ const create = async (req, res) => {
             job_id: req.body.job_id,
             salary: req.body.salary,
             manager_id: req.body.manager_id,
-            department_id: req.body.department_id
+            department_id: cekDept.department_id
         })
         return res.send(employee)
     } catch (error) {

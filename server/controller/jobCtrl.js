@@ -1,6 +1,10 @@
 const findAll = async (req, res) => {
     try {
-        const job = await req.context.models.jobs.findAll()
+        const job = await req.context.models.jobs.findAll({
+            include: [{
+                all: true
+            }]
+        })
         return res.send(job)
     } catch (error) {
         return res.status(404).send(error)
